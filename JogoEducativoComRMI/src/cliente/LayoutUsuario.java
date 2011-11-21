@@ -10,7 +10,6 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -112,11 +111,6 @@ public class LayoutUsuario extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setName("Form"); // NOI18N
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowOpened(java.awt.event.WindowEvent evt) {
-                formWindowOpened(evt);
-            }
-        });
 
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance().getContext().getResourceMap(LayoutUsuario.class);
         panelNomeAnimal.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED), new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, resourceMap.getColor("panelNomeAnimal.border.insideBorder.highlightInnerColor"), null, null))); // NOI18N
@@ -429,7 +423,8 @@ public class LayoutUsuario extends javax.swing.JFrame {
             @Override
             public void run() {
                 Calendar tempo = Calendar.getInstance();
-                while (System.currentTimeMillis() - tempoInicial < 10000) {
+//                while (System.currentTimeMillis() - tempoInicial < 15000) {
+                while (System.currentTimeMillis() - tempoInicial < 15000) {
                     tempo.setTimeInMillis( System.currentTimeMillis() - tempoInicial );                    
                     cronometro.setText(
                         tempo.get( Calendar.MINUTE ) +
@@ -438,10 +433,8 @@ public class LayoutUsuario extends javax.swing.JFrame {
                         ":" +
                         tempo.get( Calendar.MILLISECOND )
                     );                    
-                }
-                if(t1.isAlive()== true){
-                     acabouTempo = true;
-                }                    
+                }                
+                     acabouTempo = true;                                    
             } 
         };
         t1 = new Thread(crono);
@@ -1066,10 +1059,10 @@ public class LayoutUsuario extends javax.swing.JFrame {
                             }
                         }
                     }
-            }else{ 
-              JOptionPane.showMessageDialog(null, "Não da mais para digitar]");
             }
-        }   
+        }else{ 
+              JOptionPane.showMessageDialog(null, "Não da mais para digitar]");
+            }   
         letraDigitada.setText("");
         letraDigitada.grabFocus();
     }//GEN-LAST:event_letraDigitadaKeyReleased
@@ -1164,12 +1157,12 @@ public class LayoutUsuario extends javax.swing.JFrame {
             this.dadosAnimal = servidor.novoAnimalJogar(animaisJaJogados);
             try {
                 if(dadosAnimal != null){
-                     finalizaInternalFrame();
-                    preencheFormPraJogar();
-                    t1.start();
+                    finalizaInternalFrame();
+                    preencheFormPraJogar();  
                     
+                    acabouTempo = false;
+                    gerenciaCrono();
                     //    THREAD REINICIADA
-                    
                     
                 }else{
                     JOptionPane.showMessageDialog(null,"Não há mais nenhuma fase nova disponível no jogo", "Imprevisto!"
@@ -1219,10 +1212,6 @@ public class LayoutUsuario extends javax.swing.JFrame {
             ex.printStackTrace();
         }
     }//GEN-LAST:event_rankingGeralActionPerformed
-
-    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-       JOptionPane.showMessageDialog(null, "form foi aberto");
-    }//GEN-LAST:event_formWindowOpened
 
     private void instanciaConexaoServidor(){
          try {
