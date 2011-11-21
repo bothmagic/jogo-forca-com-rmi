@@ -23,10 +23,9 @@ public class LayoutRelatorioRanking extends javax.swing.JDialog {
         layoutUsuario = layUser;
         layoutUsuario.setEnabled(false);
         this.setTitle("Relatório Geral do Ranking do jogo");
-        this.setVisible(true);
-//        RMI_ServidorSemRegistry rMI_ServidorSemRegistry = new RMI_ServidorSemRegistry();
         instanciaConexaoServidor();
         recuperaTodosJogadores();
+        pesqUser.grabFocus();
         this.setModal(true);
         this.setVisible(true);
     }
@@ -175,16 +174,43 @@ public class LayoutRelatorioRanking extends javax.swing.JDialog {
         }
     }
     
+     private void populaTablePesq(List dados){         
+        if(dados != null){
+           DefaultTableModel modelo = (DefaultTableModel) listagemJogadores.getModel();           
+           modelo.setNumRows(0);
+           try{    
+               for (Iterator it = dados.iterator(); it.hasNext();) {
+                   Jogador jog = (Jogador)it.next();
+                   String descricao = jog.getNome();
+                    int codigo = jog.getCodigo();
+                    Date dtSalvo = jog.getDataSalvo();
+                    int pontuacao = jog.getPontuacao();
+                    int qtdeFases = jog.getQtdeFases();
+                    
+                    modelo.addRow(new Object[]{"-",codigo,descricao,pontuacao,qtdeFases,dtSalvo});
+               }     
+                listagemJogadores.setModel(modelo);
+          }catch(Exception ex){
+              ex.printStackTrace();
+          }
+      }else{
+            JOptionPane.showMessageDialog(null, "Não há jogadores salvos ainda no Ranking!", "Dados não encontrados"
+                                          , JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
      
     private void pesqUserKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pesqUserKeyReleased
         List retorno = null;
-        try {
-            retorno = servidor.selectJogador(pesqUser.getText());
-        } catch (RemoteException ex) {
-            ex.printStackTrace();
+        if(pesqUser.getText().equals("")){
+            recuperaTodosJogadores();
+        }else{
+            try {
+                retorno = servidor.selectJogador(pesqUser.getText());
+            } catch (RemoteException ex) {
+                ex.printStackTrace();
+            }
+            populaTablePesq(retorno);
         }
-        populaTableInicial(retorno);
-        
     }//GEN-LAST:event_pesqUserKeyReleased
 
     private void sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sairActionPerformed
