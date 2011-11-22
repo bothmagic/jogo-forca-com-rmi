@@ -1,15 +1,12 @@
 package cliente;
 
 import dao.DaoDicas;
+import facades.FacadeLogin;
 import java.awt.BorderLayout;
 import java.awt.Image;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.rmi.Naming;
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -21,7 +18,6 @@ import pojos.Animal;
 import pojos.Dicas;
 import pojos.Jogador;
 import servidor.I_RMI;
-import servidor.RMI_ServidorSemRegistry;
 import utils.AddDinamicoDe10TextFields;
 import utils.AddDinamicoDe3TextFields;
 import utils.AddDinamicoDe4TextFields;
@@ -67,8 +63,13 @@ public class LayoutUsuario extends javax.swing.JFrame {
         remenberDica.setVisible(false);
         this.dadosAnimal = primeiroAnimal;
         this.loginDialog = loginDialog;
-        RMI_ServidorSemRegistry rMI_ServidorSemRegistry = new RMI_ServidorSemRegistry();
-        instanciaConexaoServidor();
+//        RMI_ServidorSemRegistry rMI_ServidorSemRegistry = new RMI_ServidorSemRegistry();
+//        instanciaConexaoServidor();
+        
+        FacadeLogin facadeLogin = new FacadeLogin();
+        ArrayList dadosFacade = facadeLogin.fachadaLogin();   
+        servidor = (I_RMI) dadosFacade.get(0);
+        
         novoJogo.setEnabled(false);
         preencheFormPraJogar();   
         gerenciaCrono();
@@ -1213,20 +1214,20 @@ public class LayoutUsuario extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_rankingGeralActionPerformed
 
-    private void instanciaConexaoServidor(){
-         try {
-            Registry registry = LocateRegistry.getRegistry("localhost");
-            servidor = (I_RMI) Naming.lookup("rmi://localhost:1099/JogoEducativo");
-            } catch (RemoteException e) {
-            System.out.println();
-            System.out.println("RemoteException: " + e.toString());
-        } catch (NotBoundException e) {
-            System.out.println();
-            System.out.println("NotBoundException: " + e.toString());
-        } catch (Exception e) {
-            System.out.println("Erro: " + e.getMessage());
-        }
-    }
+//    private void instanciaConexaoServidor(){
+//         try {
+//            Registry registry = LocateRegistry.getRegistry("localhost");
+//            servidor = (I_RMI) Naming.lookup("rmi://localhost:1099/JogoEducativo");
+//            } catch (RemoteException e) {
+//            System.out.println();
+//            System.out.println("RemoteException: " + e.toString());
+//        } catch (NotBoundException e) {
+//            System.out.println();
+//            System.out.println("NotBoundException: " + e.toString());
+//        } catch (Exception e) {
+//            System.out.println("Erro: " + e.getMessage());
+//        }
+//    }
     
     
     /**

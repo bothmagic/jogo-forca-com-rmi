@@ -1,5 +1,6 @@
 package cliente;
 
+import facades.FacadeLogin;
 import java.awt.event.KeyEvent;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
@@ -10,6 +11,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import pojos.Animal;
+import proxy.AcessoProxy;
 import servidor.I_RMI;
 import servidor.RMI_ServidorSemRegistry;
 
@@ -22,7 +24,10 @@ public class LoginDialog extends javax.swing.JDialog {
          initComponents();
          this.setLocationRelativeTo(this);
          RMI_ServidorSemRegistry rMI_ServidorSemRegistry = new RMI_ServidorSemRegistry();
-        instanciaConexaoServidor();
+         
+         FacadeLogin facadeLogin = new FacadeLogin();
+         ArrayList dadosFacade = facadeLogin.fachadaLogin();
+         servidor = (I_RMI) dadosFacade.get(0);
     }
 
     /** This method is called from within the constructor to
@@ -128,21 +133,6 @@ public class LoginDialog extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void instanciaConexaoServidor(){
-         try {
-            Registry registry = LocateRegistry.getRegistry("localhost");
-            servidor = (I_RMI) Naming.lookup("rmi://localhost:1099/JogoEducativo");
-            } catch (RemoteException e) {
-            System.out.println();
-            System.out.println("RemoteException: " + e.toString());
-        } catch (NotBoundException e) {
-            System.out.println();
-            System.out.println("NotBoundException: " + e.toString());
-        } catch (Exception e) {
-            System.out.println("Erro: " + e.getMessage());
-        }
-    }    
-    
     private void sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sairActionPerformed
         System.exit(-1);
     }//GEN-LAST:event_sairActionPerformed
@@ -175,12 +165,14 @@ public class LoginDialog extends javax.swing.JDialog {
             if(!user.getText().equals("")&& !senha.getText().equals("")){
                 try {
                     boolean retorno = servidor.autenticaAdmin(user.getText(), senha.getText());
-                    if(retorno == true){
-                        senha.setText("");
-                        this.dispose();  
-                        LayoutAdministrador layoutAdministrador = new LayoutAdministrador(this);                                              
-                    }else{
+                    
+                                    //COMEÇO DA PARTE DO PROXY
+                    AcessoProxy acessoProxy = new AcessoProxy(retorno,this);
+                    retorno = acessoProxy.permissao();
+                                    //FIM DA PARTE DO PROXY
+                    if(retorno == false){
                         JOptionPane.showMessageDialog(null,"Usuário ou senha incorretos!", "Erro ao logar", JOptionPane.WARNING_MESSAGE);
+                        senha.setText("");
                         user.grabFocus();
                     }
                 } catch (RemoteException ex) {
@@ -216,7 +208,7 @@ public class LoginDialog extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JButton sair;
-    private javax.swing.JPasswordField senha;
+    public javax.swing.JPasswordField senha;
     private javax.swing.JTextField user;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,10 +1,8 @@
 package cliente;
 
-import java.rmi.Naming;
-import java.rmi.NotBoundException;
+import facades.FacadeLogin;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import pojos.Dicas;
 import servidor.I_RMI;
@@ -21,8 +19,10 @@ public class ManipularDicas extends javax.swing.JDialog {
         this.setModal(true);
         initComponents();
         this.setLocationRelativeTo(this);
-//         RMI_ServidorSemRegistry rMI_ServidorSemRegistry = new RMI_ServidorSemRegistry();
-        instanciaConexaoServidor();
+        
+        FacadeLogin facadeLogin = new FacadeLogin();
+        ArrayList dadosFacade = facadeLogin.fachadaLogin();   
+        servidor = (I_RMI) dadosFacade.get(0);
     }
 
     /** This method is called from within the constructor to
@@ -155,21 +155,6 @@ public class ManipularDicas extends javax.swing.JDialog {
         layoutAdministrador.setVisible(true);
     }//GEN-LAST:event_voltarActionPerformed
 
-    private void instanciaConexaoServidor(){
-         try {
-            Registry registry = LocateRegistry.getRegistry("localhost");
-            servidor = (I_RMI) Naming.lookup("rmi://localhost:1099/JogoEducativo");
-            } catch (RemoteException e) {
-            System.out.println();
-            System.out.println("RemoteException: " + e.toString());
-        } catch (NotBoundException e) {
-            System.out.println();
-            System.out.println("NotBoundException: " + e.toString());
-        } catch (Exception e) {
-            System.out.println("Erro: " + e.getMessage());
-        }
-    }  
-    
     /**
      * @param args the command line arguments
      */

@@ -1,11 +1,9 @@
 package cliente;
 
-import java.rmi.Naming;
-import java.rmi.NotBoundException;
+import facades.FacadeRanking;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -17,14 +15,21 @@ import servidor.I_RMI;
 public class LayoutRelatorioRanking extends javax.swing.JDialog {
     I_RMI servidor;
     LayoutUsuario layoutUsuario;
+    
     /** Creates new form LayoutRelatorioRanking */
     public LayoutRelatorioRanking(LayoutUsuario layUser) throws ParseException {
         initComponents();
         layoutUsuario = layUser;
         layoutUsuario.setEnabled(false);
         this.setTitle("Relatório Geral do Ranking do jogo");
-        instanciaConexaoServidor();
-        recuperaTodosJogadores();
+        
+                                // COMEÇO PADRAO FAÇADE
+        FacadeRanking facadeRanking = new FacadeRanking();
+        ArrayList dadosFacade = facadeRanking.fachadaRanking();   
+        servidor = (I_RMI) dadosFacade.get(0);
+        populaTableInicial((List)dadosFacade.get(1));
+                                // FIM PADRAO FAÇADE
+        
         pesqUser.grabFocus();
         this.setModal(true);
         this.setVisible(true);
@@ -124,30 +129,7 @@ public class LayoutRelatorioRanking extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
-     private void instanciaConexaoServidor(){
-         try {
-            Registry registry = LocateRegistry.getRegistry("localhost");
-            servidor = (I_RMI) Naming.lookup("rmi://localhost:1099/JogoEducativo");
-            } catch (RemoteException e) {
-            System.out.println();
-            System.out.println("RemoteException: " + e.toString());
-        } catch (NotBoundException e) {
-            System.out.println();
-            System.out.println("NotBoundException: " + e.toString());
-        } catch (Exception e) {
-            System.out.println("Erro: " + e.getMessage());
-        }
-    }   
-    
-    private void recuperaTodosJogadores(){
-        try {
-            populaTableInicial(servidor.retornaRanking());
-        } catch (RemoteException ex) {
-            ex.printStackTrace();
-        }
-    }
-    
+     
      private void populaTableInicial(List dados){         
         if(dados != null){
            DefaultTableModel modelo = (DefaultTableModel) listagemJogadores.getModel();
@@ -202,7 +184,11 @@ public class LayoutRelatorioRanking extends javax.swing.JDialog {
     private void pesqUserKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pesqUserKeyReleased
         List retorno = null;
         if(pesqUser.getText().equals("")){
-            recuperaTodosJogadores();
+            try {
+                populaTableInicial(servidor.retornaRanking());
+            } catch (RemoteException ex) {
+                ex.printStackTrace();
+            }
         }else{
             try {
                 retorno = servidor.selectJogador(pesqUser.getText());

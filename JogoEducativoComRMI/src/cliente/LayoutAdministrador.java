@@ -1,15 +1,13 @@
 package cliente;
 
 import dao.GenericInsertUpdateDelete;
+import facades.FacadeAdministrador;
 import java.awt.Image;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.rmi.Naming;
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -48,13 +46,24 @@ public class LayoutAdministrador extends javax.swing.JDialog {
         dicasJaSelecionadas.setColumnSelectionInterval(0, 1); 
         
         loginDialog = loginDialo;
+        loginDialo.senha.setText("");
+        loginDialog.dispose();
+        
         this.setLocationRelativeTo(this);
         this.setTitle("Cadastro de animais para jogar");
-       
-        instanciaConexaoServidor();
+
         chooser.setFileFilter(new FileNameExtensionFilter("Imagem JPG", "jpg"));
         chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        dadosParaListagemDicas();
+        
+                                 // COMEÇO PADRAO FAÇADE
+        FacadeAdministrador facadeAdministrador = new FacadeAdministrador();
+        ArrayList dadosFacade = facadeAdministrador.fachadaAdm();   
+        servidor = (I_RMI) dadosFacade.get(0);
+        populaTable((List)dadosFacade.get(1));
+        listagemDicas.setVisible(true);
+                                // FIM PADRAO FAÇADE
+        
+//        dadosParaListagemDicas();
         this.setModal(true);
         this.setVisible(true);
     }
@@ -544,21 +553,21 @@ public class LayoutAdministrador extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-        private void instanciaConexaoServidor(){
-         try {
-            Registry registry = LocateRegistry.getRegistry("localhost");
-            servidor = (I_RMI) Naming.lookup("rmi://localhost:1099/JogoEducativo");
-            } catch (RemoteException e) {
-            System.out.println();
-            System.out.println("RemoteException: " + e.toString());
-        } catch (NotBoundException e) {
-            System.out.println();
-            System.out.println("NotBoundException: " + e.toString());
-        } catch (Exception e) {
-            System.out.println("Erro: " + e.getMessage());
-        }
-    }    
-    
+//        private void instanciaConexaoServidor(){
+//         try {
+//            Registry registry = LocateRegistry.getRegistry("localhost");
+//            servidor = (I_RMI) Naming.lookup("rmi://localhost:1099/JogoEducativo");
+//            } catch (RemoteException e) {
+//            System.out.println();
+//            System.out.println("RemoteException: " + e.toString());
+//        } catch (NotBoundException e) {
+//            System.out.println();
+//            System.out.println("NotBoundException: " + e.toString());
+//        } catch (Exception e) {
+//            System.out.println("Erro: " + e.getMessage());
+//        }
+//    }    
+//    
     public byte[] imageToByte(String image) throws IOException {
 	InputStream is = null;
 	byte[] buffer = null;
