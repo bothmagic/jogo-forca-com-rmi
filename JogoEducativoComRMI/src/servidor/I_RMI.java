@@ -17,8 +17,6 @@ public interface I_RMI extends Remote {
     
     public Animal novoAnimalJogar(ArrayList<Animal> animaisJaJogados)throws RemoteException;
     
-    //DAQUI PRA BAIXO SAO OS METODOS PARA O ADMINISTRADOR
-    
     public boolean autenticaAdmin(String usuario, String senha)throws RemoteException;
     
     public int gravaAnimal(Object animal)throws RemoteException;

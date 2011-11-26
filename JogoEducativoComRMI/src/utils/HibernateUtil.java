@@ -11,8 +11,7 @@ public class HibernateUtil {
         try {
             sessionFactory = new AnnotationConfiguration().configure().buildSessionFactory();
         } catch (Throwable ex) {
-            // Log the exception. 
-            System.err.println("Initial SessionFactory creation failed." + ex);
+            System.err.println("Erro ao criar a SessionFactory inicial:\n" + ex);
             throw new ExceptionInInitializerError(ex);
         }
     }

@@ -13,7 +13,7 @@ import pojos.Animal;
 public class DaoAnimais {
     
    public Animal selectUmAnimal(String nomeAnimal){
-         DBConexao dBConexao = new DBConexao();
+         DBConexaoSingleton dBConexao = new DBConexaoSingleton();
          Animal listagem = null;
          try{
             Session sessao = dBConexao.openConection();
@@ -33,7 +33,7 @@ public class DaoAnimais {
     public Animal selectRandomAnimal(ArrayList<Animal> animaisJaJogados) {
 //        SELECT *  FROM tb_animal ORDER BY DBMS_UTILITY.GET_HASH_VALUE(TO_CHAR(dbms_utility.get_time)||ani_nome,2,1048576);
         
-        DBConexao dBConexao = new DBConexao();
+        DBConexaoSingleton dBConexao = new DBConexaoSingleton();
          List listagem = null;
          try{
             Session sessao = dBConexao.openConection();

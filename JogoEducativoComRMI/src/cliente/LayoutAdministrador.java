@@ -63,7 +63,6 @@ public class LayoutAdministrador extends javax.swing.JDialog {
         listagemDicas.setVisible(true);
                                 // FIM PADRAO FAÇADE
         
-//        dadosParaListagemDicas();
         this.setModal(true);
         this.setVisible(true);
     }

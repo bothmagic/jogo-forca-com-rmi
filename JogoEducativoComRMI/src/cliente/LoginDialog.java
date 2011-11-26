@@ -2,11 +2,7 @@ package cliente;
 
 import facades.FacadeLogin;
 import java.awt.event.KeyEvent;
-import java.rmi.Naming;
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 import java.text.ParseException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
