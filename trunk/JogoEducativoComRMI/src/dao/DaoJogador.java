@@ -13,7 +13,7 @@ import pojos.Jogador;
 public class DaoJogador {
         
     public List selectAll() {
-        DBConexao dBConexao = new DBConexao();
+        DBConexaoSingleton dBConexao = new DBConexaoSingleton();
          List listagem = null;
          try{
             Session sessao = dBConexao.openConection();
@@ -29,7 +29,7 @@ public class DaoJogador {
     }
 
     public List selectOrdenado() {
-         DBConexao dBConexao = new DBConexao();
+         DBConexaoSingleton dBConexao = new DBConexaoSingleton();
          List listagem = null;
          try{
             Session sessao = dBConexao.openConection();
@@ -47,7 +47,7 @@ public class DaoJogador {
     }    
     
      public List selectJogador(String nomePesq){
-         DBConexao dBConexao = new DBConexao();
+         DBConexaoSingleton dBConexao = new DBConexaoSingleton();
          List listagem = null;
          try{
             Session sessao = dBConexao.openConection();

@@ -63,9 +63,7 @@ public class LayoutUsuario extends javax.swing.JFrame {
         remenberDica.setVisible(false);
         this.dadosAnimal = primeiroAnimal;
         this.loginDialog = loginDialog;
-//        RMI_ServidorSemRegistry rMI_ServidorSemRegistry = new RMI_ServidorSemRegistry();
-//        instanciaConexaoServidor();
-        
+
         FacadeLogin facadeLogin = new FacadeLogin();
         ArrayList dadosFacade = facadeLogin.fachadaLogin();   
         servidor = (I_RMI) dadosFacade.get(0);
@@ -424,7 +422,6 @@ public class LayoutUsuario extends javax.swing.JFrame {
             @Override
             public void run() {
                 Calendar tempo = Calendar.getInstance();
-//                while (System.currentTimeMillis() - tempoInicial < 15000) {
                 while (System.currentTimeMillis() - tempoInicial < 15000) {
                     tempo.setTimeInMillis( System.currentTimeMillis() - tempoInicial );                    
                     cronometro.setText(
@@ -730,8 +727,8 @@ public class LayoutUsuario extends javax.swing.JFrame {
     private void letraDigitadaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_letraDigitadaKeyReleased
 //        if(!controleTempoPorNivel(System.currentTimeMillis())){
         if(acabouTempo != true){
-        char letraDig = evt.getKeyChar();
-        String nome = dadosAnimal.getNome();
+            char letraDig = evt.getKeyChar();
+            String nome = dadosAnimal.getNome();
               if(nome.length() == 4){
                   int temAletra = nome.indexOf(letraDig);
                     if(temAletra < 0){
@@ -1062,7 +1059,7 @@ public class LayoutUsuario extends javax.swing.JFrame {
                     }
             }
         }else{ 
-              JOptionPane.showMessageDialog(null, "Não da mais para digitar]");
+              JOptionPane.showMessageDialog(null, "Não da mais para digitar por falta de tempo");
             }   
         letraDigitada.setText("");
         letraDigitada.grabFocus();

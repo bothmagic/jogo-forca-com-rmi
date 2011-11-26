@@ -11,7 +11,7 @@ import pojos.Dicas;
 public class DaoDicas {
         
     public List selectAll() {
-        DBConexao dBConexao = new DBConexao();
+        DBConexaoSingleton dBConexao = new DBConexaoSingleton();
          List listagem = null;
          try{
             Session sessao = dBConexao.openConection();
@@ -27,7 +27,7 @@ public class DaoDicas {
     }
     
     public Dicas selectDica(int codDica){
-         DBConexao dBConexao = new DBConexao();
+         DBConexaoSingleton dBConexao = new DBConexaoSingleton();
          Dicas listagem = null;
          try{
             Session sessao = dBConexao.openConection();
@@ -44,7 +44,7 @@ public class DaoDicas {
     }
     
     public List<Dicas> selectDicaComFiltro(String pesq){
-         DBConexao dBConexao = new DBConexao();
+         DBConexaoSingleton dBConexao = new DBConexaoSingleton();
          List<Dicas> listagem = null;
          try{
             Session sessao = dBConexao.openConection();

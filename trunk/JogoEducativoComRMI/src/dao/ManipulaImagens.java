@@ -4,12 +4,12 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import pojos.Animal;
-import utils.HibernateUtil;
 
 public class ManipulaImagens {
     
    public Animal saveBook(Animal book){
-        Session session = HibernateUtil.getSessionFactory().openSession();
+       DBConexaoSingleton conexaoSingleton = new DBConexaoSingleton(); 
+       Session session = conexaoSingleton.openConection();
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();

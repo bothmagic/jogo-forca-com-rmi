@@ -6,10 +6,10 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 public class GenericInsertUpdateDelete {
-    DBConexao conexao;
+    DBConexaoSingleton conexao;
     
     public GenericInsertUpdateDelete(){
-        conexao = new DBConexao();
+        conexao = new DBConexaoSingleton();
     }
                       
      public int insert(Object obj) throws NoSuchFieldException, IllegalArgumentException, IllegalAccessException{
@@ -55,7 +55,7 @@ public class GenericInsertUpdateDelete {
     }
      
       public boolean delete(Object objExcluir){
-       DBConexao dBConexao = new DBConexao();
+       DBConexaoSingleton dBConexao = new DBConexaoSingleton();
        boolean retorno = false;
        try{
             Session sessao = dBConexao.openConection();
