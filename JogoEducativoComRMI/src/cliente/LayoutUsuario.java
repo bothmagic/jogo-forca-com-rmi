@@ -1,7 +1,8 @@
 package cliente;
 
 import dao.DaoDicas;
-import facades.FacadeLogin;
+import facades.FacadeUsuario;
+import flyweight.FlyweightFactory;
 import java.awt.BorderLayout;
 import java.awt.Image;
 import java.lang.reflect.InvocationTargetException;
@@ -11,6 +12,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -54,6 +56,7 @@ public class LayoutUsuario extends javax.swing.JFrame {
     DaoDicas daoDicas = null;
     ArrayList dicasJaMostradas = new ArrayList();
     ArrayList<Animal> animaisJaJogados = new ArrayList();
+    FlyweightFactory flyweightFactory;
     
     /** Creates new form LayoutUsuario */
     public LayoutUsuario(LoginDialog loginDialog,Animal primeiroAnimal) throws ParseException {
@@ -64,9 +67,13 @@ public class LayoutUsuario extends javax.swing.JFrame {
         this.dadosAnimal = primeiroAnimal;
         this.loginDialog = loginDialog;
 
-        FacadeLogin facadeLogin = new FacadeLogin();
-        ArrayList dadosFacade = facadeLogin.fachadaLogin();   
-        servidor = (I_RMI) dadosFacade.get(0);
+        //INSTANCIA PARA O PADRAO FLYWEIGHT PARA SER USADO DURANTE TODA A EXECUÇÃO DO PROGRAMA
+        flyweightFactory = new FlyweightFactory();
+        // FIM DA PARTE INICIAL DO FLYWEIGHT
+        
+        FacadeUsuario facadeUsuario = new FacadeUsuario();
+        ArrayList dadosFacade = facadeUsuario.fachadaLogin();           
+        delegaInstanciasDosAddDinamico(dadosFacade);
         
         novoJogo.setEnabled(false);
         preencheFormPraJogar();   
@@ -416,13 +423,25 @@ public class LayoutUsuario extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void delegaInstanciasDosAddDinamico(ArrayList dadosFacade){
+        servidor = (I_RMI) dadosFacade.get(0);
+        add3 = (AddDinamicoDe3TextFields) dadosFacade.get(1);
+        add4 = (AddDinamicoDe4TextFields) dadosFacade.get(2);
+        add5 = (AddDinamicoDe5TextFields) dadosFacade.get(3);
+        add6 = (AddDinamicoDe6TextFields) dadosFacade.get(4);
+        add7 = (AddDinamicoDe7TextFields) dadosFacade.get(5);
+        add8 = (AddDinamicoDe8TextFields) dadosFacade.get(6);
+        add9 = (AddDinamicoDe9TextFields) dadosFacade.get(7);
+        add10 = (AddDinamicoDe10TextFields) dadosFacade.get(8);
+    }
+    
     private void gerenciaCrono(){
        Runnable crono = new Runnable() {  
            
             @Override
             public void run() {
                 Calendar tempo = Calendar.getInstance();
-                while (System.currentTimeMillis() - tempoInicial < 15000) {
+                while (System.currentTimeMillis() - tempoInicial < 30000) {
                     tempo.setTimeInMillis( System.currentTimeMillis() - tempoInicial );                    
                     cronometro.setText(
                         tempo.get( Calendar.MINUTE ) +
@@ -436,55 +455,63 @@ public class LayoutUsuario extends javax.swing.JFrame {
             } 
         };
         t1 = new Thread(crono);
-        t1.start();        
+        t1.start();     
     }    
     
     private void add3LetrasNoPanel() throws ParseException{
         panelNomeAnimal.setLayout(new BorderLayout()); 
-        add3 = new AddDinamicoDe3TextFields();
+//        add3 = new AddDinamicoDe3TextFields();
+        add3 = (AddDinamicoDe3TextFields) flyweightFactory.getFlyweight(add3);
         panelNomeAnimal.add(add3);
     }
     
     private void add4LetrasNoPanel() throws ParseException{
         panelNomeAnimal.setLayout(new BorderLayout()); 
-         add4 = new AddDinamicoDe4TextFields();
+//         add4 = new AddDinamicoDe4TextFields();
+        add4 = (AddDinamicoDe4TextFields) flyweightFactory.getFlyweight(add4);
         panelNomeAnimal.add(add4);
 
        }
     
     private void add5LetrasNoPanel() throws ParseException{        
         panelNomeAnimal.setLayout(new BorderLayout());
-        add5 = new AddDinamicoDe5TextFields();
+//        add5 = new AddDinamicoDe5TextFields();
+        add5 = (AddDinamicoDe5TextFields) flyweightFactory.getFlyweight(add5);
         panelNomeAnimal.add(add5);
     }
     
     private void add6LetrasNoPanel() throws ParseException{        
         panelNomeAnimal.setLayout(new BorderLayout()); 
-        add6 = new AddDinamicoDe6TextFields();
+//        add6 = new AddDinamicoDe6TextFields();
+        add6 = (AddDinamicoDe6TextFields) flyweightFactory.getFlyweight(add6);
         panelNomeAnimal.add(add6);
     }
     
    private void add7LetrasNoPanel() throws ParseException{        
         panelNomeAnimal.setLayout(new BorderLayout()); 
-        add7 = new AddDinamicoDe7TextFields();
+//        add7 = new AddDinamicoDe7TextFields();
+        add7 = (AddDinamicoDe7TextFields) flyweightFactory.getFlyweight(add7);
         panelNomeAnimal.add(add7);
     }
     
     private void add8LetrasNoPanel() throws ParseException{        
         panelNomeAnimal.setLayout(new BorderLayout()); 
-        add8 = new AddDinamicoDe8TextFields();
+//        add8 = new AddDinamicoDe8TextFields();
+        add8 = (AddDinamicoDe8TextFields) flyweightFactory.getFlyweight(add8);
         panelNomeAnimal.add(add8);
     }
     
     private void add9LetrasNoPanel() throws ParseException{        
         panelNomeAnimal.setLayout(new BorderLayout()); 
-        add9 = new AddDinamicoDe9TextFields();
+//        add9 = new AddDinamicoDe9TextFields();
+        add9 = (AddDinamicoDe9TextFields) flyweightFactory.getFlyweight(add9);
         panelNomeAnimal.add(add9);
     }
    
     private void add10LetrasNoPanel() throws ParseException{       
         panelNomeAnimal.setLayout(new BorderLayout()); 
-        add10 = new AddDinamicoDe10TextFields();
+//        add10 = new AddDinamicoDe10TextFields();
+        add10 = (AddDinamicoDe10TextFields) flyweightFactory.getFlyweight(add10);
         panelNomeAnimal.add(add10);
     }
     
@@ -733,7 +760,11 @@ public class LayoutUsuario extends javax.swing.JFrame {
                   int temAletra = nome.indexOf(letraDig);
                     if(temAletra < 0){
                         if(numCreditos != 0){
-                            numCreditos--;
+                            try {
+                                numCreditos = servidor.atualizaCreditos(1);
+                            } catch (RemoteException ex) {
+                                ex.printStackTrace();
+                            }                            
                         }else{
                             JOptionPane.showMessageDialog(null,"Acabou seus créditos!","Fim de Jogo",JOptionPane.INFORMATION_MESSAGE);
                             novoJogo.setEnabled(true);
@@ -759,6 +790,7 @@ public class LayoutUsuario extends javax.swing.JFrame {
                             try {
                                 qtdeFases++;
                                 ByteParaImagem(dadosAnimal.getFotoNormal());
+                                desabilitaBotoesAoAcabarTempo();
                                 JOptionPane.showMessageDialog(null, "Parabéns! Voçê finalizou esta fase!","Felicitações"
                                                                   , JOptionPane.INFORMATION_MESSAGE);
                             } catch (Exception ex) {
@@ -770,7 +802,11 @@ public class LayoutUsuario extends javax.swing.JFrame {
                     int temAletra = nome.indexOf(letraDig);
                     if(temAletra < 0){
                         if(numCreditos != 0){
-                            numCreditos--;
+                            try {
+                                numCreditos = servidor.atualizaCreditos(1);
+                            } catch (RemoteException ex) {
+                                ex.printStackTrace();
+                            }   
                         }else{
                             JOptionPane.showMessageDialog(null,"Acabou seus créditos!","Fim de Jogo",JOptionPane.INFORMATION_MESSAGE);
                             novoJogo.setEnabled(true);
@@ -791,6 +827,9 @@ public class LayoutUsuario extends javax.swing.JFrame {
                             try {
                                 qtdeFases++;
                                 ByteParaImagem(dadosAnimal.getFotoNormal());
+                                desabilitaBotoesAoAcabarTempo();
+                                JOptionPane.showMessageDialog(null, "Parabéns! Voçê finalizou esta fase!","Felicitações"
+                                                                  , JOptionPane.INFORMATION_MESSAGE);
                             } catch (Exception ex) {
                                 ex.printStackTrace();
                             }
@@ -800,7 +839,11 @@ public class LayoutUsuario extends javax.swing.JFrame {
                     int temAletra = nome.indexOf(letraDig);
                     if(temAletra < 0){
                         if(numCreditos != 0){
-                            numCreditos--;
+                            try {
+                                numCreditos = servidor.atualizaCreditos(1);
+                            } catch (RemoteException ex) {
+                                ex.printStackTrace();
+                            }   
                         }else{
                             JOptionPane.showMessageDialog(null,"Acabou seus créditos!","Fim de Jogo",JOptionPane.INFORMATION_MESSAGE);
                             novoJogo.setEnabled(true);
@@ -827,6 +870,9 @@ public class LayoutUsuario extends javax.swing.JFrame {
                             try {
                                 qtdeFases++;
                                 ByteParaImagem(dadosAnimal.getFotoNormal());
+                                desabilitaBotoesAoAcabarTempo();
+                                JOptionPane.showMessageDialog(null, "Parabéns! Voçê finalizou esta fase!","Felicitações"
+                                                                  , JOptionPane.INFORMATION_MESSAGE);
                             } catch (Exception ex) {
                                 ex.printStackTrace();
                             }
@@ -836,7 +882,11 @@ public class LayoutUsuario extends javax.swing.JFrame {
                     int temAletra = nome.indexOf(letraDig);
                     if(temAletra < 0){
                         if(numCreditos != 0){
-                            numCreditos--;
+                            try {
+                                numCreditos = servidor.atualizaCreditos(1);
+                            } catch (RemoteException ex) {
+                                ex.printStackTrace();
+                            }   
                         }else{
                             JOptionPane.showMessageDialog(null,"Acabou seus créditos!","Fim de Jogo",JOptionPane.INFORMATION_MESSAGE);
                             novoJogo.setEnabled(true);
@@ -866,6 +916,9 @@ public class LayoutUsuario extends javax.swing.JFrame {
                             try {
                                 qtdeFases++;
                                 ByteParaImagem(dadosAnimal.getFotoNormal());
+                                desabilitaBotoesAoAcabarTempo();
+                                 JOptionPane.showMessageDialog(null, "Parabéns! Voçê finalizou esta fase!","Felicitações"
+                                                                  , JOptionPane.INFORMATION_MESSAGE);
                             } catch (Exception ex) {
                                 ex.printStackTrace();
                             }
@@ -875,7 +928,11 @@ public class LayoutUsuario extends javax.swing.JFrame {
                     int temAletra = nome.indexOf(letraDig);
                     if(temAletra < 0){
                         if(numCreditos != 0){
-                            numCreditos--;
+                            try {
+                                numCreditos = servidor.atualizaCreditos(1);
+                            } catch (RemoteException ex) {
+                                ex.printStackTrace();
+                            }   
                         }else{
                             JOptionPane.showMessageDialog(null,"Acabou seus créditos!","Fim de Jogo",JOptionPane.INFORMATION_MESSAGE);
                             novoJogo.setEnabled(true);
@@ -908,6 +965,9 @@ public class LayoutUsuario extends javax.swing.JFrame {
                             try {
                                 qtdeFases++;
                                 ByteParaImagem(dadosAnimal.getFotoNormal());
+                                desabilitaBotoesAoAcabarTempo();
+                                 JOptionPane.showMessageDialog(null, "Parabéns! Voçê finalizou esta fase!","Felicitações"
+                                                                  , JOptionPane.INFORMATION_MESSAGE);
                             } catch (Exception ex) {
                                 ex.printStackTrace();
                             }
@@ -917,7 +977,11 @@ public class LayoutUsuario extends javax.swing.JFrame {
                     int temAletra = nome.indexOf(letraDig);
                     if(temAletra < 0){
                         if(numCreditos != 0){
-                            numCreditos--;
+                            try {
+                                numCreditos = servidor.atualizaCreditos(1);
+                            } catch (RemoteException ex) {
+                                ex.printStackTrace();
+                            }   
                         }else{
                             JOptionPane.showMessageDialog(null,"Acabou seus créditos!","Fim de Jogo",JOptionPane.INFORMATION_MESSAGE);
                             novoJogo.setEnabled(true);
@@ -953,6 +1017,9 @@ public class LayoutUsuario extends javax.swing.JFrame {
                             try {
                                 qtdeFases++;
                                 ByteParaImagem(dadosAnimal.getFotoNormal());
+                                desabilitaBotoesAoAcabarTempo();
+                                 JOptionPane.showMessageDialog(null, "Parabéns! Voçê finalizou esta fase!","Felicitações"
+                                                                  , JOptionPane.INFORMATION_MESSAGE);
                             } catch (Exception ex) {
                                 ex.printStackTrace();
                             }
@@ -961,8 +1028,12 @@ public class LayoutUsuario extends javax.swing.JFrame {
             }else if(nome.length() == 9){
                     int temAletra = nome.indexOf(letraDig);
                     if(temAletra < 0){
-                        if(numCreditos != 0){
-                            numCreditos--;
+                       if(numCreditos != 0){
+                            try {
+                                numCreditos = servidor.atualizaCreditos(1);
+                            } catch (RemoteException ex) {
+                                ex.printStackTrace();
+                            }   
                         }else{
                             JOptionPane.showMessageDialog(null,"Acabou seus créditos!","Fim de Jogo",JOptionPane.INFORMATION_MESSAGE);
                             novoJogo.setEnabled(true);
@@ -1001,6 +1072,9 @@ public class LayoutUsuario extends javax.swing.JFrame {
                             try {
                                 qtdeFases++;
                                 ByteParaImagem(dadosAnimal.getFotoNormal());
+                                desabilitaBotoesAoAcabarTempo();
+                                 JOptionPane.showMessageDialog(null, "Parabéns! Voçê finalizou esta fase!","Felicitações"
+                                                                  , JOptionPane.INFORMATION_MESSAGE);
                             } catch (Exception ex) {
                                 ex.printStackTrace();
                             }
@@ -1010,7 +1084,11 @@ public class LayoutUsuario extends javax.swing.JFrame {
                     int temAletra = nome.indexOf(letraDig);
                     if(temAletra < 0){
                         if(numCreditos != 0){
-                            numCreditos--;
+                            try {
+                                numCreditos = servidor.atualizaCreditos(1);
+                            } catch (RemoteException ex) {
+                                ex.printStackTrace();
+                            }   
                         }else{
                             JOptionPane.showMessageDialog(null,"Acabou seus créditos!","Fim de Jogo",JOptionPane.INFORMATION_MESSAGE);
                             novoJogo.setEnabled(true);
@@ -1052,6 +1130,9 @@ public class LayoutUsuario extends javax.swing.JFrame {
                             try {
                                 qtdeFases++;
                                 ByteParaImagem(dadosAnimal.getFotoNormal());
+                                desabilitaBotoesAoAcabarTempo();
+                                 JOptionPane.showMessageDialog(null, "Parabéns! Voçê finalizou esta fase!","Felicitações"
+                                                                  , JOptionPane.INFORMATION_MESSAGE);
                             } catch (Exception ex) {
                                 ex.printStackTrace();
                             }
@@ -1060,11 +1141,26 @@ public class LayoutUsuario extends javax.swing.JFrame {
             }
         }else{ 
               JOptionPane.showMessageDialog(null, "Não da mais para digitar por falta de tempo");
+              desabilitaBotoesAoAcabarTempo();
             }   
         letraDigitada.setText("");
         letraDigitada.grabFocus();
     }//GEN-LAST:event_letraDigitadaKeyReleased
 
+    private void desabilitaBotoesAoAcabarTempo(){
+        maisDica.setEnabled(false);
+        dicaEspecial.setEnabled(false);
+        novaFase.setEnabled(true);  
+        letraDigitada.setEditable(false);
+    }
+    
+    private void habilitaBotoesNovamente(){
+        maisDica.setEnabled(true);
+        dicaEspecial.setEnabled(true);
+        novaFase.setEnabled(false);
+        letraDigitada.setEditable(true);
+    }
+    
     private void finalizaInternalFrame(){
          if(add3 != null){
             add3.dispose();
@@ -1174,6 +1270,7 @@ public class LayoutUsuario extends javax.swing.JFrame {
         } catch (RemoteException ex) {
             ex.printStackTrace();
         }
+        habilitaBotoesNovamente();
     }//GEN-LAST:event_novaFaseActionPerformed
 
     private void novoJogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_novoJogoActionPerformed
@@ -1204,29 +1301,14 @@ public class LayoutUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_novoJogoActionPerformed
 
     private void rankingGeralActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rankingGeralActionPerformed
+        t1.suspend();        
         try {
-            LayoutRelatorioRanking ranking = new LayoutRelatorioRanking(this);
+            LayoutRelatorioRanking ranking = new LayoutRelatorioRanking(this,t1);
         } catch (ParseException ex) {
             ex.printStackTrace();
         }
     }//GEN-LAST:event_rankingGeralActionPerformed
 
-//    private void instanciaConexaoServidor(){
-//         try {
-//            Registry registry = LocateRegistry.getRegistry("localhost");
-//            servidor = (I_RMI) Naming.lookup("rmi://localhost:1099/JogoEducativo");
-//            } catch (RemoteException e) {
-//            System.out.println();
-//            System.out.println("RemoteException: " + e.toString());
-//        } catch (NotBoundException e) {
-//            System.out.println();
-//            System.out.println("NotBoundException: " + e.toString());
-//        } catch (Exception e) {
-//            System.out.println("Erro: " + e.getMessage());
-//        }
-//    }
-    
-    
     /**
      * @param args the command line arguments
      */

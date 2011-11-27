@@ -17,5 +17,5 @@ public class FacadeLogin {
          servidor = new DBConexaoSingleton().getServidorSingleton();
          dadosParaPassar.add(servidor);           
     }
-   
+    
 }
