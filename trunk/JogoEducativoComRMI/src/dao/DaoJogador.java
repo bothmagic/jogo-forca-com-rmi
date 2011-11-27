@@ -34,9 +34,9 @@ public class DaoJogador {
          try{
             Session sessao = dBConexao.openConection();
             Transaction transacao = sessao.beginTransaction();
-            Criteria pesqCriteria = sessao.createCriteria(Jogador.class)
-		  .addOrder(Order.desc("pontuacao"))
-                   .addOrder(Order.desc("qtdeFases"));
+            Criteria pesqCriteria = sessao.createCriteria(Jogador.class)		  
+                   .addOrder(Order.desc("qtdeFases"))
+                   .addOrder(Order.desc("pontuacao"));
             listagem = pesqCriteria.list();
             transacao.commit();
             sessao.close();

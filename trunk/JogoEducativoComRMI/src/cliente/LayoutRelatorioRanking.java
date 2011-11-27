@@ -15,11 +15,12 @@ import servidor.I_RMI;
 public class LayoutRelatorioRanking extends javax.swing.JDialog {
     I_RMI servidor;
     LayoutUsuario layoutUsuario;
-    
+    Thread t1;
     /** Creates new form LayoutRelatorioRanking */
-    public LayoutRelatorioRanking(LayoutUsuario layUser) throws ParseException {
+    public LayoutRelatorioRanking(LayoutUsuario layUser,Thread t1) throws ParseException {
         initComponents();
         layoutUsuario = layUser;
+        this.t1 = t1;
         layoutUsuario.setEnabled(false);
         this.setTitle("Relatório Geral do Ranking do jogo");
         
@@ -203,6 +204,7 @@ public class LayoutRelatorioRanking extends javax.swing.JDialog {
         this.dispose();
         layoutUsuario.setVisible(true);
         layoutUsuario.setEnabled(true);
+        t1.resume();
     }//GEN-LAST:event_sairActionPerformed
     
     /**
