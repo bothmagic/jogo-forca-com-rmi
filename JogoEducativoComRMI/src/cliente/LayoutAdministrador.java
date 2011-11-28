@@ -1,6 +1,5 @@
 package cliente;
 
-import dao.GenericInsertUpdateDelete;
 import facades.FacadeAdministrador;
 import java.awt.Image;
 import java.io.FileInputStream;
@@ -13,11 +12,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
-import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import pojos.Animal;
 import pojos.Dicas;
 import servidor.I_RMI;
+import utils.fileChooser.ImagePreview;
 
 public class LayoutAdministrador extends javax.swing.JDialog {
     Animal animal = new Animal();
@@ -52,8 +51,7 @@ public class LayoutAdministrador extends javax.swing.JDialog {
         this.setLocationRelativeTo(this);
         this.setTitle("Cadastro de animais para jogar");
 
-        chooser.setFileFilter(new FileNameExtensionFilter("Imagem JPG", "jpg"));
-        chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        chooser.setAccessory(new ImagePreview(chooser));
         
                                  // COMEÇO PADRAO FAÇADE
         FacadeAdministrador facadeAdministrador = new FacadeAdministrador();
@@ -552,21 +550,6 @@ public class LayoutAdministrador extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-//        private void instanciaConexaoServidor(){
-//         try {
-//            Registry registry = LocateRegistry.getRegistry("localhost");
-//            servidor = (I_RMI) Naming.lookup("rmi://localhost:1099/JogoEducativo");
-//            } catch (RemoteException e) {
-//            System.out.println();
-//            System.out.println("RemoteException: " + e.toString());
-//        } catch (NotBoundException e) {
-//            System.out.println();
-//            System.out.println("NotBoundException: " + e.toString());
-//        } catch (Exception e) {
-//            System.out.println("Erro: " + e.getMessage());
-//        }
-//    }    
-//    
     public byte[] imageToByte(String image) throws IOException {
 	InputStream is = null;
 	byte[] buffer = null;
@@ -676,15 +659,10 @@ public class LayoutAdministrador extends javax.swing.JDialog {
     }//GEN-LAST:event_gravarActionPerformed
 
     private void atualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atualizarActionPerformed
-        GenericInsertUpdateDelete insertUpdate = new GenericInsertUpdateDelete();
         boolean retorno = false;
         try{
-            retorno = insertUpdate.update(animal);
-        } catch (NoSuchFieldException ex) {
-            ex.printStackTrace();
-        } catch (IllegalArgumentException ex) {
-            ex.printStackTrace();
-        } catch (IllegalAccessException ex) {
+            retorno = servidor.atualizaAnimal(animal);
+        }catch(RemoteException ex){
             ex.printStackTrace();
         }
         if(retorno == true){
@@ -821,6 +799,7 @@ public class LayoutAdministrador extends javax.swing.JDialog {
          apertouNoFinalizaDica = true;
         int qtdeLinhas = dicasJaSelecionadas.getRowCount();
         if(qtdeLinhas == 5){  
+            codDicasSelecionadas = new StringBuilder();
             for(int i =0; i< qtdeLinhas; i++){
                 if(i == qtdeLinhas-1){
                     codDicasSelecionadas.append(dicasJaSelecionadas.getValueAt(i, 0));
@@ -841,6 +820,20 @@ public class LayoutAdministrador extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_finalizaDicasActionPerformed
 
+    private int verificaCodigoJaInformado(int cod){
+        DefaultTableModel modelo = (DefaultTableModel) dicasJaSelecionadas.getModel();
+        int qtdeLinhas = modelo.getRowCount();
+        for (int i = 0; i < qtdeLinhas; i++) {
+            if(cod == dicasJaSelecionadas.getValueAt(i, 0)){
+                JOptionPane.showMessageDialog(null, "Não há como adicionar duas dicas iguais para um mesmo animal", "Atenção"
+                                                  , JOptionPane.WARNING_MESSAGE);
+                qtdeLinhas = -1;
+                break;
+            }
+        }
+        return qtdeLinhas;
+    }
+    
     private void addDicaPraBaixoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addDicaPraBaixoActionPerformed
         try{
             int linhaSelecionada = listagemDicas.getSelectedRow();              
@@ -851,8 +844,10 @@ public class LayoutAdministrador extends javax.swing.JDialog {
                 Dicas dados = new Dicas();
                 dados.setCodigo((Integer)listagemDicas.getValueAt(linhaSelecionada, 0));
                 dados.setDescricao(String.valueOf(listagemDicas.getValueAt(linhaSelecionada, 1)));
-               
-                populaTableDicasJaAdd(dados);               
+                int retorno = verificaCodigoJaInformado(dados.getCodigo());
+                if(retorno != -1){
+                    populaTableDicasJaAdd(dados);
+                }
             }
             
         }catch(ArrayIndexOutOfBoundsException ex){
