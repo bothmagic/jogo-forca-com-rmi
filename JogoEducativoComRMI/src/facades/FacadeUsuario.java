@@ -1,6 +1,7 @@
 package facades;
 
 import dao.DBConexaoSingleton;
+import java.rmi.RemoteException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import servidor.I_RMI;
@@ -17,15 +18,25 @@ public class FacadeUsuario {
     private I_RMI servidor = null;    
     public ArrayList dadosParaPassar = new ArrayList(); 
     
-    public ArrayList fachadaLogin() throws ParseException{
+    public ArrayList fachadaUsuario() throws ParseException{
         this.getInstanciaServidor();
         this.instanciaTdsOsAddDinamicos();
+        this.atualizaVlrsPlacar();
         return this.dadosParaPassar;
     }
     
     private void getInstanciaServidor(){        
          servidor = new DBConexaoSingleton().getServidorSingleton();
          dadosParaPassar.add(servidor);           
+    }
+    
+    private void atualizaVlrsPlacar(){
+        try {
+            servidor.setVlrCreditos(10);
+            servidor.setVlrMultiplicante(1000);
+        } catch (RemoteException ex) {
+            ex.printStackTrace();
+        }
     }
     
     private void instanciaTdsOsAddDinamicos() throws ParseException{

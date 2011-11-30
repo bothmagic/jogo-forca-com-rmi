@@ -1,7 +1,10 @@
 package dao;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.SQLQuery;
@@ -32,14 +35,19 @@ public class DaoAnimais {
 
     public Animal selectRandomAnimal(ArrayList<Animal> animaisJaJogados) {
 //        SELECT *  FROM tb_animal ORDER BY DBMS_UTILITY.GET_HASH_VALUE(TO_CHAR(dbms_utility.get_time)||ani_nome,2,1048576);
+//Select * From (Select * From emp Order By Dbms_Random.Value) a Where Rownum < 3
+                                
+                                //duas formas diferentes de se pesquisar registros aleatorios usando oracle
         
         DBConexaoSingleton dBConexao = new DBConexaoSingleton();
          List listagem = null;
          try{
             Session sessao = dBConexao.openConection();
             Transaction transacao = sessao.beginTransaction();
-            SQLQuery pesqRandom = sessao.createSQLQuery("SELECT *  FROM tb_animal ORDER BY DBMS_UTILITY.GET_HASH_VALUE"
-                    + "(TO_CHAR(dbms_utility.get_time)||ani_nome,2,1048576)").addEntity(Animal.class);
+//            SQLQuery pesqRandom = sessao.createSQLQuery("SELECT * FROM tb_animal ORDER BY DBMS_UTILITY.GET_HASH_VALUE"
+//                    + "(TO_CHAR(dbms_utility.get_time)||ani_nome,2,1048576)").addEntity(Animal.class);            
+            SQLQuery pesqRandom = sessao.createSQLQuery("SELECT * FROM(SELECT * FROM tb_animal ORDER BY Dbms_Random.Value) a"
+                    + " where Rownum < 3").addEntity(Animal.class);            
             listagem = pesqRandom.list();
             transacao.commit();
             sessao.close();
@@ -58,7 +66,7 @@ public class DaoAnimais {
                          }else{
                              break;
                          }
-                     }
+                     }                     
                 }else{
                     aniReturn = null;
                 }

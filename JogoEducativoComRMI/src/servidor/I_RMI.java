@@ -9,6 +9,10 @@ import pojos.Dicas;
 
 public interface I_RMI extends Remote {
 
+    public void setVlrCreditos(int vlrCreditos)throws RemoteException;
+    
+    public void setVlrMultiplicante(int vlrMultiplicante)throws RemoteException;
+    
     public int atualizaCreditos(int vlrDebitante)throws RemoteException;
     
     public int atualizaVlrMultiplicante(int vlrDebitante)throws RemoteException;
