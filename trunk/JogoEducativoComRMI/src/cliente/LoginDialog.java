@@ -149,7 +149,7 @@ public class LoginDialog extends javax.swing.JDialog {
         }
         System.out.println("\n\n animal dados: "+primeiroAnimal.toString());
         try {
-            LayoutUsuario layoutUsuario = new LayoutUsuario(this,primeiroAnimal);
+            new LayoutUsuario(this,primeiroAnimal);
         } catch (ParseException ex) {
             ex.printStackTrace();
         }

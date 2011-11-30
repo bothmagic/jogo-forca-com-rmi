@@ -17,11 +17,13 @@ import pojos.Jogador;
 
 public class RMI_Impl extends UnicastRemoteObject  implements I_RMI {
    
-    private int vlrMultiplicante = 1000;
-    private int vlrCreditos = 10;
+    private int vlrMultiplicante;
+    private int vlrCreditos;
     
   public RMI_Impl() throws RemoteException {
     super();
+    vlrMultiplicante = 1000;
+    vlrCreditos = 10;
   }
 
     @Override
@@ -192,6 +194,7 @@ public class RMI_Impl extends UnicastRemoteObject  implements I_RMI {
         return vlrMultiplicante;
     }
 
+    @Override
     public void setVlrMultiplicante(int vlrMultiplicante) {
         this.vlrMultiplicante = vlrMultiplicante;
     }
@@ -200,6 +203,7 @@ public class RMI_Impl extends UnicastRemoteObject  implements I_RMI {
         return vlrCreditos;
     }
 
+    @Override
     public void setVlrCreditos(int vlrCreditos) {
         this.vlrCreditos = vlrCreditos;
     }

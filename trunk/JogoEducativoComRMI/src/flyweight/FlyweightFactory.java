@@ -22,6 +22,7 @@ public final class FlyweightFactory {
         if(object == null){
             tdsAsClassesAddDinamico.add(classeDesejada);
             object = classeDesejada;
+            
 //            try {
 //                object = classeDesejada.getClass().newInstance();
 //                tdsAsClassesAddDinamico.add(object);

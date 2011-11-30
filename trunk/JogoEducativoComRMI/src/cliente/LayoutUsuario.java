@@ -12,7 +12,8 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -30,8 +31,8 @@ import utils.AddDinamicoDe8TextFields;
 import utils.AddDinamicoDe9TextFields;
 
 public class LayoutUsuario extends javax.swing.JFrame {
-    int numCreditos = 10;
-    int vlrMultiplicador = 1000;
+    int numCreditos;
+    int vlrMultiplicador;
     int qtdeDicasRestantes = 5;
     long tempoInicial = 0;
     int retornoVlrMultiplicante = 1000;
@@ -61,6 +62,8 @@ public class LayoutUsuario extends javax.swing.JFrame {
     /** Creates new form LayoutUsuario */
     public LayoutUsuario(LoginDialog loginDialog,Animal primeiroAnimal) throws ParseException {
         initComponents();
+        vlrMultiplicador = 1000;
+        numCreditos = 10;
         qtdeCreditos.setText(String.valueOf(numCreditos));
         vlrAMultiplicar.setText(String.valueOf(vlrMultiplicador));
         remenberDica.setVisible(false);
@@ -72,7 +75,7 @@ public class LayoutUsuario extends javax.swing.JFrame {
         // FIM DA PARTE INICIAL DO FLYWEIGHT
         
         FacadeUsuario facadeUsuario = new FacadeUsuario();
-        ArrayList dadosFacade = facadeUsuario.fachadaLogin();           
+        ArrayList dadosFacade = facadeUsuario.fachadaUsuario();           
         delegaInstanciasDosAddDinamico(dadosFacade);
         
         novoJogo.setEnabled(false);
@@ -460,59 +463,58 @@ public class LayoutUsuario extends javax.swing.JFrame {
     
     private void add3LetrasNoPanel() throws ParseException{
         panelNomeAnimal.setLayout(new BorderLayout()); 
-//        add3 = new AddDinamicoDe3TextFields();
         add3 = (AddDinamicoDe3TextFields) flyweightFactory.getFlyweight(add3);
         panelNomeAnimal.add(add3);
+        add3.setVisible(true);
     }
     
     private void add4LetrasNoPanel() throws ParseException{
         panelNomeAnimal.setLayout(new BorderLayout()); 
-//         add4 = new AddDinamicoDe4TextFields();
         add4 = (AddDinamicoDe4TextFields) flyweightFactory.getFlyweight(add4);
         panelNomeAnimal.add(add4);
-
+        add4.setVisible(true);
        }
     
     private void add5LetrasNoPanel() throws ParseException{        
         panelNomeAnimal.setLayout(new BorderLayout());
-//        add5 = new AddDinamicoDe5TextFields();
         add5 = (AddDinamicoDe5TextFields) flyweightFactory.getFlyweight(add5);
         panelNomeAnimal.add(add5);
+        add5.setVisible(true);
     }
     
     private void add6LetrasNoPanel() throws ParseException{        
         panelNomeAnimal.setLayout(new BorderLayout()); 
-//        add6 = new AddDinamicoDe6TextFields();
         add6 = (AddDinamicoDe6TextFields) flyweightFactory.getFlyweight(add6);
         panelNomeAnimal.add(add6);
+        add6.setVisible(true);
     }
     
    private void add7LetrasNoPanel() throws ParseException{        
         panelNomeAnimal.setLayout(new BorderLayout()); 
-//        add7 = new AddDinamicoDe7TextFields();
         add7 = (AddDinamicoDe7TextFields) flyweightFactory.getFlyweight(add7);
         panelNomeAnimal.add(add7);
+        add7.setVisible(true);
     }
     
     private void add8LetrasNoPanel() throws ParseException{        
         panelNomeAnimal.setLayout(new BorderLayout()); 
-//        add8 = new AddDinamicoDe8TextFields();
         add8 = (AddDinamicoDe8TextFields) flyweightFactory.getFlyweight(add8);
         panelNomeAnimal.add(add8);
+        add8.setVisible(true);
     }
     
     private void add9LetrasNoPanel() throws ParseException{        
         panelNomeAnimal.setLayout(new BorderLayout()); 
-//        add9 = new AddDinamicoDe9TextFields();
         add9 = (AddDinamicoDe9TextFields) flyweightFactory.getFlyweight(add9);
         panelNomeAnimal.add(add9);
+        add9.setVisible(true);
     }
    
     private void add10LetrasNoPanel() throws ParseException{       
         panelNomeAnimal.setLayout(new BorderLayout()); 
-//        add10 = new AddDinamicoDe10TextFields();
         add10 = (AddDinamicoDe10TextFields) flyweightFactory.getFlyweight(add10);
         panelNomeAnimal.add(add10);
+        add10.setVisible(true);
     }
     
      private void populaTable(Dicas dados){         
@@ -525,12 +527,6 @@ public class LayoutUsuario extends javax.swing.JFrame {
           }catch(Exception ex){
               ex.printStackTrace();
           }
-    }
-    
-    private void controleTempoPraDicas(){
-        if (System.currentTimeMillis() - tempoInicial > 30000) { // 30 segundos  
-            
-        }  
     }
     
     private void zeraFormPraNovaFase(){
@@ -551,7 +547,12 @@ public class LayoutUsuario extends javax.swing.JFrame {
           boolean retorno = false;
           if (tempoAtual - tempoInicial > 30000) { // 30 segundos  
                 System.out.println("\n\n acabou o tempo");   
-                numCreditos = numCreditos - 2;
+            try {
+                //numCreditos = numCreditos - 2;
+                 numCreditos = servidor.atualizaCreditos(2);
+            } catch (RemoteException ex) {
+                ex.printStackTrace();
+            }
                 qtdeCreditos.setText(String.valueOf(numCreditos));
                 zeraFormPraNovaFase();
                 retorno = true;
@@ -647,6 +648,9 @@ public class LayoutUsuario extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "O nome do animal é menor que 3 ou maior que 10"
                     , "Nome do animal inconsistente", JOptionPane.ERROR_MESSAGE);
         }
+        remenberDica.setVisible(false);
+        dicaEspecial.setEnabled(true);
+        
         letraDigitada.setEditable(true);
         letraDigitada.grabFocus();
         this.setVisible(true); 
@@ -670,8 +674,13 @@ public class LayoutUsuario extends javax.swing.JFrame {
           if(resp == JOptionPane.YES_OPTION){
             try {
                 int newVlrCredito = servidor.atualizaCreditos(3);
-                vlrMultiplicador = newVlrCredito;
-                qtdeCreditos.setText(String.valueOf(vlrMultiplicador));
+//                vlrMultiplicador = newVlrCredito;
+                if(newVlrCredito <= 0){
+                    JOptionPane.showMessageDialog(null, "Seus créditos acabaram!", "Fim de Jogo", JOptionPane.INFORMATION_MESSAGE);
+                     novoJogo.setEnabled(true);
+                     salvarNoRanking.setEnabled(true);
+                }
+                qtdeCreditos.setText(String.valueOf(newVlrCredito));
             } catch (RemoteException ex) {
                 ex.printStackTrace();
             }
@@ -1237,9 +1246,14 @@ public class LayoutUsuario extends javax.swing.JFrame {
             }
         
         if(!retornoInvocacao.equalsIgnoreCase(dadosAnimal.getNome())){
-            if(numCreditos != 0){
-                numCreditos--;
-                qtdeCreditos.setText(String.valueOf(numCreditos));
+            if(numCreditos > 0){
+                try {
+                    //numCreditos--;
+                     numCreditos = servidor.atualizaCreditos(1);
+                     qtdeCreditos.setText(String.valueOf(numCreditos));
+                } catch (RemoteException ex) {
+                   ex.printStackTrace();
+                }                
             }else{
                 JOptionPane.showMessageDialog(null, "Acabaram-se os seus créditos!", "Fim de Jogo", JOptionPane.INFORMATION_MESSAGE);
                 novoJogo.setEnabled(true);
@@ -1252,6 +1266,8 @@ public class LayoutUsuario extends javax.swing.JFrame {
             try {
                 if(dadosAnimal != null){
                     finalizaInternalFrame();
+                    //se o nome do novo animal tiver a mesma qtde de letras usar o memento pra salvar o obj e depois atribuir
+             // EXEMPLO: add4 é pra passado pro memento dai é chamado o finalizaInternalFrame e depois é passado add4 = add4Memento
                     preencheFormPraJogar();  
                     
                     acabouTempo = false;
