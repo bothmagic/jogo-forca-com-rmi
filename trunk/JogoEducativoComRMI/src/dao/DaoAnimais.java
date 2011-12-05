@@ -35,7 +35,8 @@ public class DaoAnimais {
 
     public Animal selectRandomAnimal(ArrayList<Animal> animaisJaJogados) {
 //        SELECT *  FROM tb_animal ORDER BY DBMS_UTILITY.GET_HASH_VALUE(TO_CHAR(dbms_utility.get_time)||ani_nome,2,1048576);
-//Select * From (Select * From emp Order By Dbms_Random.Value) a Where Rownum < 3
+
+        //Select * From (Select * From emp Order By Dbms_Random.Value) a Where Rownum < 3
                                 
                                 //duas formas diferentes de se pesquisar registros aleatorios usando oracle
         
@@ -56,17 +57,28 @@ public class DaoAnimais {
             ex.printStackTrace();
         }    
          Animal aniReturn = null;
+         boolean continua = true;
          try{          
              if(!animaisJaJogados.isEmpty()){
-                if(listagem.size() != animaisJaJogados.size()){                     
-                     for (int i = 0; i < animaisJaJogados.size(); i++) {
-                         aniReturn = (Animal)listagem.get(i);
-                         if(aniReturn.getCodigo() == animaisJaJogados.get(i).getCodigo()){
-                             selectRandomAnimal(animaisJaJogados);
-                         }else{
+                if(listagem.size() != animaisJaJogados.size()){    
+                    int i = 0;
+                    while(continua == true){
+                        
+                      if(continua == true){                          
+                         for (i = i; i < listagem.size(); i++) {
+                             aniReturn = (Animal)listagem.get(i);
                              break;
                          }
-                     }                     
+                      }
+                             for (int j = 0; j < animaisJaJogados.size(); j++) {
+                                 if(aniReturn.getCodigo() != animaisJaJogados.get(j).getCodigo()){
+                                    continua = false;
+                                     break;
+                                 }else{
+                                     i++;
+                                 }
+                             }                             
+                         }                      
                 }else{
                     aniReturn = null;
                 }
@@ -75,6 +87,7 @@ public class DaoAnimais {
              }
          }catch(IndexOutOfBoundsException ex){
             aniReturn = null;
+            ex.printStackTrace();
          }
          return aniReturn;
     }

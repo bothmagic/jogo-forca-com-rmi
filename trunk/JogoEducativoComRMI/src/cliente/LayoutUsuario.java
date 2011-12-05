@@ -134,7 +134,7 @@ public class LayoutUsuario extends javax.swing.JFrame {
         );
         panelNomeAnimalLayout.setVerticalGroup(
             panelNomeAnimalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 105, Short.MAX_VALUE)
+            .addGap(0, 83, Short.MAX_VALUE)
         );
 
         panelCreditos.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -293,15 +293,15 @@ public class LayoutUsuario extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(letraDigitada, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
+                .addContainerGap()
                 .addComponent(letraDigitada, javax.swing.GroupLayout.PREFERRED_SIZE, 38, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -332,48 +332,6 @@ public class LayoutUsuario extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(232, 232, 232)
-                        .addComponent(fotoAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 124, Short.MAX_VALUE)
-                        .addComponent(cronometro, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 684, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(321, 321, 321)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(panelNomeAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, 684, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(novaFase)
-                            .addComponent(rankingGeral))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(0, 0, 0)
-                                .addComponent(novoJogo, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(sair)
-                                .addGap(14, 14, 14)
-                                .addComponent(maisDica)
-                                .addGap(5, 5, 5))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(salvarNoRanking)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(19, 19, 19)
-                                .addComponent(dicaEspecial)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(remenberDica, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE))
-                            .addComponent(panelCreditos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(241, Short.MAX_VALUE)
                 .addComponent(jLabel4)
@@ -382,6 +340,50 @@ public class LayoutUsuario extends javax.swing.JFrame {
                 .addContainerGap(339, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addGap(334, 334, 334))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(panelNomeAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, 684, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(232, 232, 232)
+                        .addComponent(fotoAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 124, Short.MAX_VALUE)
+                        .addComponent(cronometro, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 684, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(320, 320, 320)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(304, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(novaFase)
+                    .addComponent(rankingGeral))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 0, 0)
+                        .addComponent(novoJogo, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(sair)
+                        .addGap(14, 14, 14)
+                        .addComponent(maisDica)
+                        .addGap(5, 5, 5))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(salvarNoRanking)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addComponent(dicaEspecial)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(remenberDica, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE))
+                    .addComponent(panelCreditos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -397,8 +399,8 @@ public class LayoutUsuario extends javax.swing.JFrame {
                 .addGap(30, 30, 30)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(panelNomeAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelNomeAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -413,14 +415,14 @@ public class LayoutUsuario extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(23, 23, 23)
-                        .addComponent(panelCreditos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
+                        .addComponent(panelCreditos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(salvarNoRanking)
                             .addComponent(rankingGeral))
-                        .addGap(20, 20, 20))))
+                        .addGap(9, 9, 9)))
+                .addContainerGap())
         );
 
         pack();
@@ -765,23 +767,23 @@ public class LayoutUsuario extends javax.swing.JFrame {
         if(acabouTempo != true){
             char letraDig = evt.getKeyChar();
             String nome = dadosAnimal.getNome();
-              if(nome.length() == 4){
-                  int temAletra = nome.indexOf(letraDig);
+            
+            int temAletra = nome.indexOf(letraDig);
                     if(temAletra < 0){
-                        if(numCreditos != 0){
+                        if(numCreditos > 0){
                             try {
                                 numCreditos = servidor.atualizaCreditos(1);
                             } catch (RemoteException ex) {
                                 ex.printStackTrace();
-                            }                            
+                            }                             
                         }else{
                             JOptionPane.showMessageDialog(null,"Acabou seus créditos!","Fim de Jogo",JOptionPane.INFORMATION_MESSAGE);
                             novoJogo.setEnabled(true);
                             salvarNoRanking.setEnabled(true);
                         }
                         qtdeCreditos.setText(String.valueOf(numCreditos));
-                    }else{  
-                    
+                    }else if(numCreditos >0 ){
+              if(nome.length() == 4){
                         if(letraDig == nome.charAt(0)){
                             add4.habilitaField1(true,String.valueOf(nome.charAt(0)));
                         }                
@@ -806,23 +808,7 @@ public class LayoutUsuario extends javax.swing.JFrame {
                                 ex.printStackTrace();
                             }
                         }
-                    }
             }else if(nome.length() == 3){
-                    int temAletra = nome.indexOf(letraDig);
-                    if(temAletra < 0){
-                        if(numCreditos != 0){
-                            try {
-                                numCreditos = servidor.atualizaCreditos(1);
-                            } catch (RemoteException ex) {
-                                ex.printStackTrace();
-                            }   
-                        }else{
-                            JOptionPane.showMessageDialog(null,"Acabou seus créditos!","Fim de Jogo",JOptionPane.INFORMATION_MESSAGE);
-                            novoJogo.setEnabled(true);
-                            salvarNoRanking.setEnabled(true);
-                        }
-                        qtdeCreditos.setText(String.valueOf(numCreditos));
-                    }else{ 
                         if(letraDig == nome.charAt(0)){
                             add3.habilitaField1(true,String.valueOf(nome.charAt(0)));
                         }                
@@ -843,23 +829,7 @@ public class LayoutUsuario extends javax.swing.JFrame {
                                 ex.printStackTrace();
                             }
                         }
-                    }
             }else if(nome.length() == 5){
-                    int temAletra = nome.indexOf(letraDig);
-                    if(temAletra < 0){
-                        if(numCreditos != 0){
-                            try {
-                                numCreditos = servidor.atualizaCreditos(1);
-                            } catch (RemoteException ex) {
-                                ex.printStackTrace();
-                            }   
-                        }else{
-                            JOptionPane.showMessageDialog(null,"Acabou seus créditos!","Fim de Jogo",JOptionPane.INFORMATION_MESSAGE);
-                            novoJogo.setEnabled(true);
-                            salvarNoRanking.setEnabled(true);
-                        }
-                        qtdeCreditos.setText(String.valueOf(numCreditos));
-                    }else{ 
                         if(letraDig == nome.charAt(0)){
                             add5.habilitaField1(true,String.valueOf(nome.charAt(0)));
                         }                
@@ -886,23 +856,7 @@ public class LayoutUsuario extends javax.swing.JFrame {
                                 ex.printStackTrace();
                             }
                         }
-                    }
-            }else if(nome.length() == 6){
-                    int temAletra = nome.indexOf(letraDig);
-                    if(temAletra < 0){
-                        if(numCreditos != 0){
-                            try {
-                                numCreditos = servidor.atualizaCreditos(1);
-                            } catch (RemoteException ex) {
-                                ex.printStackTrace();
-                            }   
-                        }else{
-                            JOptionPane.showMessageDialog(null,"Acabou seus créditos!","Fim de Jogo",JOptionPane.INFORMATION_MESSAGE);
-                            novoJogo.setEnabled(true);
-                            salvarNoRanking.setEnabled(true);
-                        }
-                        qtdeCreditos.setText(String.valueOf(numCreditos));
-                    }else{ 
+            }else if(nome.length() == 6){ 
                         if(letraDig == nome.charAt(0)){
                             add6.habilitaField1(true,String.valueOf(nome.charAt(0)));
                         }                
@@ -932,23 +886,7 @@ public class LayoutUsuario extends javax.swing.JFrame {
                                 ex.printStackTrace();
                             }
                         }
-                    }
             }else if(nome.length() == 7){
-                    int temAletra = nome.indexOf(letraDig);
-                    if(temAletra < 0){
-                        if(numCreditos != 0){
-                            try {
-                                numCreditos = servidor.atualizaCreditos(1);
-                            } catch (RemoteException ex) {
-                                ex.printStackTrace();
-                            }   
-                        }else{
-                            JOptionPane.showMessageDialog(null,"Acabou seus créditos!","Fim de Jogo",JOptionPane.INFORMATION_MESSAGE);
-                            novoJogo.setEnabled(true);
-                            salvarNoRanking.setEnabled(true);
-                        }
-                        qtdeCreditos.setText(String.valueOf(numCreditos));
-                    }else{ 
                         if(letraDig == nome.charAt(0)){
                             add7.habilitaField1(true,String.valueOf(nome.charAt(0)));
                         }                
@@ -981,23 +919,7 @@ public class LayoutUsuario extends javax.swing.JFrame {
                                 ex.printStackTrace();
                             }
                         }
-                    }
             }else if(nome.length() == 8){
-                    int temAletra = nome.indexOf(letraDig);
-                    if(temAletra < 0){
-                        if(numCreditos != 0){
-                            try {
-                                numCreditos = servidor.atualizaCreditos(1);
-                            } catch (RemoteException ex) {
-                                ex.printStackTrace();
-                            }   
-                        }else{
-                            JOptionPane.showMessageDialog(null,"Acabou seus créditos!","Fim de Jogo",JOptionPane.INFORMATION_MESSAGE);
-                            novoJogo.setEnabled(true);
-                            salvarNoRanking.setEnabled(true);
-                        }
-                        qtdeCreditos.setText(String.valueOf(numCreditos));
-                    }else{ 
                         if(letraDig == nome.charAt(0)){
                             add8.habilitaField1(true,String.valueOf(nome.charAt(0)));
                         }                
@@ -1033,23 +955,7 @@ public class LayoutUsuario extends javax.swing.JFrame {
                                 ex.printStackTrace();
                             }
                         }
-                    }
             }else if(nome.length() == 9){
-                    int temAletra = nome.indexOf(letraDig);
-                    if(temAletra < 0){
-                       if(numCreditos != 0){
-                            try {
-                                numCreditos = servidor.atualizaCreditos(1);
-                            } catch (RemoteException ex) {
-                                ex.printStackTrace();
-                            }   
-                        }else{
-                            JOptionPane.showMessageDialog(null,"Acabou seus créditos!","Fim de Jogo",JOptionPane.INFORMATION_MESSAGE);
-                            novoJogo.setEnabled(true);
-                            salvarNoRanking.setEnabled(true);
-                        }
-                        qtdeCreditos.setText(String.valueOf(numCreditos));
-                    }else{ 
                         if(letraDig == nome.charAt(0)){
                             add9.habilitaField1(true,String.valueOf(nome.charAt(0)));
                         }                
@@ -1088,23 +994,7 @@ public class LayoutUsuario extends javax.swing.JFrame {
                                 ex.printStackTrace();
                             }
                         }
-                    }
             }else if(nome.length() == 10){
-                    int temAletra = nome.indexOf(letraDig);
-                    if(temAletra < 0){
-                        if(numCreditos != 0){
-                            try {
-                                numCreditos = servidor.atualizaCreditos(1);
-                            } catch (RemoteException ex) {
-                                ex.printStackTrace();
-                            }   
-                        }else{
-                            JOptionPane.showMessageDialog(null,"Acabou seus créditos!","Fim de Jogo",JOptionPane.INFORMATION_MESSAGE);
-                            novoJogo.setEnabled(true);
-                            salvarNoRanking.setEnabled(true);
-                        }
-                        qtdeCreditos.setText(String.valueOf(numCreditos));
-                    }else{ 
                         if(letraDig == nome.charAt(0)){
                             add10.habilitaField1(true,String.valueOf(nome.charAt(0)));
                         }                
@@ -1291,6 +1181,7 @@ public class LayoutUsuario extends javax.swing.JFrame {
 
     private void novoJogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_novoJogoActionPerformed
         try {
+            System.gc();
             animaisJaJogados = new ArrayList<Animal>();
             vlrMultiplicador = 1000;
             numCreditos = 10;
@@ -1302,6 +1193,8 @@ public class LayoutUsuario extends javax.swing.JFrame {
                 if(dadosAnimal != null){
                      finalizaInternalFrame();
                     preencheFormPraJogar();
+                    acabouTempo = false;
+                    gerenciaCrono();
                 }
                 else{
                     JOptionPane.showMessageDialog(null,"Não há mais nenhuma fase disponível no servidor do jogo", "Imprevisto!"
@@ -1319,7 +1212,7 @@ public class LayoutUsuario extends javax.swing.JFrame {
     private void rankingGeralActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rankingGeralActionPerformed
         t1.suspend();        
         try {
-            LayoutRelatorioRanking ranking = new LayoutRelatorioRanking(this,t1);
+            new LayoutRelatorioRanking(this,t1);
         } catch (ParseException ex) {
             ex.printStackTrace();
         }
