@@ -53,13 +53,11 @@ public class LayoutAdministrador extends javax.swing.JDialog {
 
         chooser.setAccessory(new ImagePreview(chooser));
         
-                                 // COMEÇO PADRAO FAÇADE
         FacadeAdministrador facadeAdministrador = new FacadeAdministrador();
         ArrayList dadosFacade = facadeAdministrador.fachadaAdm();   
         servidor = (I_RMI) dadosFacade.get(0);
         populaTable((List)dadosFacade.get(1));
         listagemDicas.setVisible(true);
-                                // FIM PADRAO FAÇADE
         
         this.setModal(true);
         this.setVisible(true);
@@ -592,7 +590,6 @@ public class LayoutAdministrador extends javax.swing.JDialog {
        if(JFileChooser.APPROVE_OPTION == rc){
             try {
                 nomeDoArquivo = chooser.getSelectedFile().getName();
-                System.out.println("nome do arquivo:"+nomeDoArquivo);
                 animal.setFotoNormal(imageToByte(chooser.getSelectedFile().getAbsolutePath()));
             } catch (IOException ex) {
                 ex.printStackTrace();
@@ -652,16 +649,22 @@ public class LayoutAdministrador extends javax.swing.JDialog {
     private void gravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gravarActionPerformed
         int vlrReturno = -1;
         animal.setDicaEspecial(dicaEspecial.getText());
-        try {
-            vlrReturno = servidor.gravaAnimal(animal);
-        } catch (RemoteException ex) {
-            ex.printStackTrace();
-        }
-       if(vlrReturno <=0){
-           JOptionPane.showMessageDialog(null,"Erro ao inserir este registro!", "Inserção", JOptionPane.ERROR_MESSAGE);
-       }else{
-           JOptionPane.showMessageDialog(null,"Registro cadastrado com sucesso!", "Inserção", JOptionPane.INFORMATION_MESSAGE);
+        if(animal.getNome().length() <3 || animal.getNome().length() >10){
+            JOptionPane.showMessageDialog(null, "O nome do animal deve conter no minimo 3 letras e no maximo 10", "Atenção!"
+                                              , JOptionPane.WARNING_MESSAGE);
+        }else{
+            try {
+                vlrReturno = servidor.gravaAnimal(animal);
+            } catch (RemoteException ex) {
+                ex.printStackTrace();
+            }
+            if(vlrReturno <=0){
+               JOptionPane.showMessageDialog(null,"Erro ao inserir este registro!", "Inserção", JOptionPane.ERROR_MESSAGE);
+           }else{
+               JOptionPane.showMessageDialog(null,"Registro cadastrado com sucesso!", "Inserção", JOptionPane.INFORMATION_MESSAGE);
+           }
        }
+       
     }//GEN-LAST:event_gravarActionPerformed
 
     private void atualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atualizarActionPerformed

@@ -86,25 +86,25 @@ public class LoginDialog extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel1)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(user, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(jLabel2)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(senha)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(abrirJogo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 193, Short.MAX_VALUE)
-                        .addComponent(sair)
-                        .addGap(35, 35, 35)))
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(80, 80, 80)
-                .addComponent(imgLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(75, 75, 75))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(user, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(senha, javax.swing.GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(imgLogin, javax.swing.GroupLayout.DEFAULT_SIZE, 305, Short.MAX_VALUE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(abrirJogo)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
+                                        .addComponent(sair)
+                                        .addGap(61, 61, 61)))))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -117,9 +117,9 @@ public class LoginDialog extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel2)
                     .addComponent(senha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(imgLogin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(49, 49, 49)
+                .addGap(56, 56, 56)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(abrirJogo)
                     .addComponent(sair))
@@ -139,20 +139,21 @@ public class LoginDialog extends javax.swing.JDialog {
         ArrayList<Animal> naoContribui = new ArrayList<Animal>();
         try {
            primeiroAnimal = servidor.selectPrimeiroAnimal(naoContribui);
-           if(primeiroAnimal == null){
-                JOptionPane.showMessageDialog(null, "Não há animais cadastrados para continuar o jogo!\nDesculpa, mas o jogo será encerrado."
-                     , "Banco de dados Vazio", JOptionPane.ERROR_MESSAGE);
-                System.exit(-1);
-           }
         } catch (RemoteException ex) {
             ex.printStackTrace();
-        }
-        System.out.println("\n\n animal dados: "+primeiroAnimal.toString());
-        try {
-            new LayoutUsuario(this,primeiroAnimal);
-        } catch (ParseException ex) {
-            ex.printStackTrace();
-        }
+        }   
+           if(primeiroAnimal == null){
+                JOptionPane.showMessageDialog(null, "Não há animais cadastrados para continuar o jogo!\nDesculpa, mas o jogo não será "
+                                                    + "iniciado!", "Banco de dados Vazio", JOptionPane.ERROR_MESSAGE);
+//                System.exit(-1);
+           }else{
+               try {
+                    new LayoutUsuario(this,primeiroAnimal);
+                } catch (ParseException ex) {
+                    ex.printStackTrace();
+                }
+           }
+            
     }//GEN-LAST:event_abrirJogoActionPerformed
 
     private void senhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_senhaKeyPressed
@@ -161,11 +162,10 @@ public class LoginDialog extends javax.swing.JDialog {
             if(!user.getText().equals("")&& !senha.getText().equals("")){
                 try {
                     boolean retorno = servidor.autenticaAdmin(user.getText(), senha.getText());
-                    
-                                    //COMEÇO DA PARTE DO PROXY
+
                     AcessoProxy acessoProxy = new AcessoProxy(retorno,this);
                     retorno = acessoProxy.permissao();
-                                    //FIM DA PARTE DO PROXY
+                    
                     if(retorno == false){
                         JOptionPane.showMessageDialog(null,"Usuário ou senha incorretos!", "Erro ao logar", JOptionPane.WARNING_MESSAGE);
                         senha.setText("");
