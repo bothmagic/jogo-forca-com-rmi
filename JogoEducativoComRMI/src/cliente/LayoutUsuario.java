@@ -12,8 +12,6 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -70,9 +68,7 @@ public class LayoutUsuario extends javax.swing.JFrame {
         this.dadosAnimal = primeiroAnimal;
         this.loginDialog = loginDialog;
 
-        //INSTANCIA PARA O PADRAO FLYWEIGHT PARA SER USADO DURANTE TODA A EXECUÇÃO DO PROGRAMA
         flyweightFactory = new FlyweightFactory();
-        // FIM DA PARTE INICIAL DO FLYWEIGHT
         
         FacadeUsuario facadeUsuario = new FacadeUsuario();
         ArrayList dadosFacade = facadeUsuario.fachadaUsuario();           
@@ -547,10 +543,9 @@ public class LayoutUsuario extends javax.swing.JFrame {
     
       private boolean controleTempoPorNivel(long tempoAtual){          
           boolean retorno = false;
-          if (tempoAtual - tempoInicial > 30000) { // 30 segundos  
+          if (tempoAtual - tempoInicial > 30000) {
                 System.out.println("\n\n acabou o tempo");   
             try {
-                //numCreditos = numCreditos - 2;
                  numCreditos = servidor.atualizaCreditos(2);
             } catch (RemoteException ex) {
                 ex.printStackTrace();
@@ -676,7 +671,6 @@ public class LayoutUsuario extends javax.swing.JFrame {
           if(resp == JOptionPane.YES_OPTION){
             try {
                 int newVlrCredito = servidor.atualizaCreditos(3);
-//                vlrMultiplicador = newVlrCredito;
                 if(newVlrCredito <= 0){
                     JOptionPane.showMessageDialog(null, "Seus créditos acabaram!", "Fim de Jogo", JOptionPane.INFORMATION_MESSAGE);
                      novoJogo.setEnabled(true);
@@ -763,7 +757,6 @@ public class LayoutUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_maisDicaActionPerformed
     
     private void letraDigitadaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_letraDigitadaKeyReleased
-//        if(!controleTempoPorNivel(System.currentTimeMillis())){
         if(acabouTempo != true){
             char letraDig = evt.getKeyChar();
             String nome = dadosAnimal.getNome();
@@ -1138,7 +1131,6 @@ public class LayoutUsuario extends javax.swing.JFrame {
         if(!retornoInvocacao.equalsIgnoreCase(dadosAnimal.getNome())){
             if(numCreditos > 0){
                 try {
-                    //numCreditos--;
                      numCreditos = servidor.atualizaCreditos(1);
                      qtdeCreditos.setText(String.valueOf(numCreditos));
                 } catch (RemoteException ex) {
@@ -1156,14 +1148,10 @@ public class LayoutUsuario extends javax.swing.JFrame {
             try {
                 if(dadosAnimal != null){
                     finalizaInternalFrame();
-                    //se o nome do novo animal tiver a mesma qtde de letras usar o memento pra salvar o obj e depois atribuir
-             // EXEMPLO: add4 é pra passado pro memento dai é chamado o finalizaInternalFrame e depois é passado add4 = add4Memento
                     preencheFormPraJogar();  
                     
                     acabouTempo = false;
-                    gerenciaCrono();
-                    //    THREAD REINICIADA
-                    
+                    gerenciaCrono();                    
                 }else{
                     JOptionPane.showMessageDialog(null,"Não há mais nenhuma fase nova disponível no jogo", "Imprevisto!"
                                                       ,JOptionPane.INFORMATION_MESSAGE);

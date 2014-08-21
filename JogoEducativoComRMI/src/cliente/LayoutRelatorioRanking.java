@@ -23,13 +23,11 @@ public class LayoutRelatorioRanking extends javax.swing.JDialog {
         this.t1 = t1;
         layoutUsuario.setEnabled(false);
         this.setTitle("Relatório Geral do Ranking do jogo");
-        
-                                // COMEÇO PADRAO FAÇADE
+               
         FacadeRanking facadeRanking = new FacadeRanking();
         ArrayList dadosFacade = facadeRanking.fachadaRanking();   
         servidor = (I_RMI) dadosFacade.get(0);
         populaTableInicial((List)dadosFacade.get(1));
-                                // FIM PADRAO FAÇADE
         
         pesqUser.grabFocus();
         this.setModal(true);
@@ -213,6 +211,7 @@ public class LayoutRelatorioRanking extends javax.swing.JDialog {
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
 
+            @Override
             public void run() {             
                     new LayoutRelatorioRanking().setVisible(true);               
             }
